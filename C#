@@ -1,0 +1,537 @@
+// ============================================================
+// EJERCICIO 1: Número positivo, negativo o cero
+// ============================================================
+using System;
+
+class Ejercicio1
+{
+    static void Main()
+    {
+        Console.Write("Ingresa un número: ");
+        double numero = Convert.ToDouble(Console.ReadLine());
+
+        if (numero > 0)
+            Console.WriteLine("El número es positivo.");
+        else if (numero < 0)
+            Console.WriteLine("El número es negativo.");
+        else
+            Console.WriteLine("El número es cero.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 2: Número par o impar
+// ============================================================
+using System;
+
+class Ejercicio2
+{
+    static void Main()
+    {
+        Console.Write("Ingresa un número entero: ");
+        int numero = Convert.ToInt32(Console.ReadLine());
+
+        if (numero % 2 == 0)
+            Console.WriteLine("El número es par.");
+        else
+            Console.WriteLine("El número es impar.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 3: Mayor de edad
+// ============================================================
+using System;
+
+class Ejercicio3
+{
+    static void Main()
+    {
+        Console.Write("Ingresa tu edad: ");
+        int edad = Convert.ToInt32(Console.ReadLine());
+
+        if (edad >= 18)
+            Console.WriteLine("Eres mayor de edad.");
+        else
+            Console.WriteLine("Eres menor de edad.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 4: Múltiplo de 5
+// ============================================================
+using System;
+
+class Ejercicio4
+{
+    static void Main()
+    {
+        Console.Write("Ingresa un número: ");
+        int numero = Convert.ToInt32(Console.ReadLine());
+
+        if (numero % 5 == 0)
+            Console.WriteLine($"{numero} es múltiplo de 5.");
+        else
+            Console.WriteLine($"{numero} no es múltiplo de 5.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 5: Descuento por edad (cine)
+// ============================================================
+using System;
+
+class Ejercicio5
+{
+    static void Main()
+    {
+        Console.Write("Ingresa tu edad: ");
+        int edad = Convert.ToInt32(Console.ReadLine());
+
+        if (edad > 60)
+            Console.WriteLine("Aplicas para el descuento del 50%.");
+        else
+            Console.WriteLine("No aplicas para el descuento.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 6: Calificación aprobatoria
+// ============================================================
+using System;
+
+class Ejercicio6
+{
+    static void Main()
+    {
+        Console.Write("Ingresa tu calificación (0-100): ");
+        int calificacion = Convert.ToInt32(Console.ReadLine());
+
+        if (calificacion >= 60)
+            Console.WriteLine("Aprobaste.");
+        else
+            Console.WriteLine("Reprobaste.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 7: Día de la semana (Switch)
+// ============================================================
+using System;
+
+class Ejercicio7
+{
+    static void Main()
+    {
+        Console.Write("Ingresa un número del 1 al 7: ");
+        int dia = Convert.ToInt32(Console.ReadLine());
+
+        switch (dia)
+        {
+            case 1: Console.WriteLine("Lunes");    break;
+            case 2: Console.WriteLine("Martes");   break;
+            case 3: Console.WriteLine("Miércoles");break;
+            case 4: Console.WriteLine("Jueves");   break;
+            case 5: Console.WriteLine("Viernes");  break;
+            case 6: Console.WriteLine("Sábado");   break;
+            case 7: Console.WriteLine("Domingo");  break;
+            default: Console.WriteLine("Número inválido."); break;
+        }
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 8: Número mayor entre dos
+// ============================================================
+using System;
+
+class Ejercicio8
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el primer número: ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el segundo número: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        if (a > b)
+            Console.WriteLine($"{a} es mayor.");
+        else if (b > a)
+            Console.WriteLine($"{b} es mayor.");
+        else
+            Console.WriteLine("Los números son iguales.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 9: Mayor entre tres números
+// ============================================================
+using System;
+
+class Ejercicio9
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el primer número: ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el segundo número: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el tercer número: ");
+        double c = Convert.ToDouble(Console.ReadLine());
+
+        double mayor;
+
+        if (a >= b && a >= c)
+            mayor = a;
+        else if (b >= a && b >= c)
+            mayor = b;
+        else
+            mayor = c;
+
+        Console.WriteLine($"El mayor es: {mayor}");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 10: Clasificación de ángulos
+// ============================================================
+using System;
+
+class Ejercicio10
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el valor del ángulo en grados: ");
+        double angulo = Convert.ToDouble(Console.ReadLine());
+
+        if (angulo < 90)
+            Console.WriteLine("El ángulo es agudo.");
+        else if (angulo == 90)
+            Console.WriteLine("El ángulo es recto.");
+        else if (angulo < 180)
+            Console.WriteLine("El ángulo es obtuso.");
+        else if (angulo == 180)
+            Console.WriteLine("El ángulo es llano.");
+        else
+            Console.WriteLine("Ángulo no válido.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 11: Cálculo de impuestos
+// ============================================================
+using System;
+
+class Ejercicio11
+{
+    static void Main()
+    {
+        Console.Write("Ingresa tu salario mensual: ");
+        double salario = Convert.ToDouble(Console.ReadLine());
+
+        double impuesto;
+        double porcentaje;
+
+        if (salario < 10000)
+        {
+            porcentaje = 0;
+            impuesto   = 0;
+        }
+        else if (salario <= 30000)
+        {
+            porcentaje = 10;
+            impuesto   = salario * 0.10;
+        }
+        else
+        {
+            porcentaje = 20;
+            impuesto   = salario * 0.20;
+        }
+
+        Console.WriteLine($"Porcentaje de impuesto: {porcentaje}%");
+        Console.WriteLine($"Impuesto a pagar: {impuesto:F2}");
+        Console.WriteLine($"Salario neto: {salario - impuesto:F2}");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 12: Clasificación de números (positivos, negativos, mixtos, ceros)
+// ============================================================
+using System;
+
+class Ejercicio12
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el primer número:  ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el segundo número: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el tercer número:  ");
+        double c = Convert.ToDouble(Console.ReadLine());
+
+        bool hayPositivos = a > 0 || b > 0 || c > 0;
+        bool hayNegativos = a < 0 || b < 0 || c < 0;
+        bool hayCeros     = a == 0 || b == 0 || c == 0;
+
+        if (hayCeros)
+            Console.WriteLine("Al menos uno de los números es cero.");
+        else if (hayPositivos && hayNegativos)
+            Console.WriteLine("Los números son mixtos (positivos y negativos).");
+        else if (hayPositivos)
+            Console.WriteLine("Todos los números son positivos.");
+        else
+            Console.WriteLine("Todos los números son negativos.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 13: Verificación de año bisiesto
+// ============================================================
+using System;
+
+class Ejercicio13
+{
+    static void Main()
+    {
+        Console.Write("Ingresa un año: ");
+        int anio = Convert.ToInt32(Console.ReadLine());
+
+        bool bisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
+
+        if (bisiesto)
+            Console.WriteLine($"{anio} es un año bisiesto.");
+        else
+            Console.WriteLine($"{anio} no es un año bisiesto.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 14: Conversión de calificaciones a letra (Switch con when)
+// ============================================================
+using System;
+
+class Ejercicio14
+{
+    static void Main()
+    {
+        Console.Write("Ingresa la calificación (0-100): ");
+        int cal = Convert.ToInt32(Console.ReadLine());
+
+        char letra;
+
+        switch (cal)
+        {
+            case int n when n >= 90 && n <= 100: letra = 'A'; break;
+            case int n when n >= 80:             letra = 'B'; break;
+            case int n when n >= 70:             letra = 'C'; break;
+            case int n when n >= 60:             letra = 'D'; break;
+            case int n when n >= 0:              letra = 'F'; break;
+            default:
+                Console.WriteLine("Calificación inválida.");
+                return;
+        }
+
+        Console.WriteLine($"Tu calificación en letra es: {letra}");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 15: Comparación de tres longitudes (triángulo válido)
+// ============================================================
+using System;
+
+class Ejercicio15
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el primer lado:  ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el segundo lado: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el tercer lado:  ");
+        double c = Convert.ToDouble(Console.ReadLine());
+
+        if (a + b > c && a + c > b && b + c > a)
+            Console.WriteLine("Los lados SÍ pueden formar un triángulo.");
+        else
+            Console.WriteLine("Los lados NO pueden formar un triángulo.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 16: Calculadora de descuentos
+// ============================================================
+using System;
+
+class Ejercicio16
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el precio del producto: $");
+        double precio = Convert.ToDouble(Console.ReadLine());
+
+        double descuento;
+        double porcentaje;
+
+        if (precio < 50)
+        {
+            porcentaje = 0;
+            descuento  = 0;
+        }
+        else if (precio <= 100)
+        {
+            porcentaje = 5;
+            descuento  = precio * 0.05;
+        }
+        else
+        {
+            porcentaje = 10;
+            descuento  = precio * 0.10;
+        }
+
+        Console.WriteLine($"Descuento aplicado: {porcentaje}% (${descuento:F2})");
+        Console.WriteLine($"Precio final: ${precio - descuento:F2}");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 17: Tipo de triángulo
+// ============================================================
+using System;
+
+class Ejercicio17
+{
+    static void Main()
+    {
+        Console.Write("Ingresa el primer lado:  ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el segundo lado: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa el tercer lado:  ");
+        double c = Convert.ToDouble(Console.ReadLine());
+
+        // Primero verificamos que forme un triángulo válido
+        if (!(a + b > c && a + c > b && b + c > a))
+        {
+            Console.WriteLine("Esos lados no forman un triángulo válido.");
+            return;
+        }
+
+        if (a == b && b == c)
+            Console.WriteLine("El triángulo es equilátero.");
+        else if (a == b || b == c || a == c)
+            Console.WriteLine("El triángulo es isósceles.");
+        else
+            Console.WriteLine("El triángulo es escaleno.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 18: Evaluación de temperatura
+// ============================================================
+using System;
+
+class Ejercicio18
+{
+    static void Main()
+    {
+        Console.Write("Ingresa la temperatura en °C: ");
+        double temp = Convert.ToDouble(Console.ReadLine());
+
+        if (temp < 0)
+            Console.WriteLine("Hace mucho frío.");
+        else if (temp <= 20)
+            Console.WriteLine("Clima fresco.");
+        else if (temp <= 30)
+            Console.WriteLine("Clima agradable.");
+        else
+            Console.WriteLine("Hace mucho calor.");
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 19: Conversión de horas a turnos (Switch con when)
+// ============================================================
+using System;
+
+class Ejercicio19
+{
+    static void Main()
+    {
+        Console.Write("Ingresa la hora (0-23): ");
+        int hora = Convert.ToInt32(Console.ReadLine());
+
+        switch (hora)
+        {
+            case int h when h >= 0  && h <= 5:  Console.WriteLine("Madrugada"); break;
+            case int h when h >= 6  && h <= 11: Console.WriteLine("Mañana");    break;
+            case int h when h >= 12 && h <= 17: Console.WriteLine("Tarde");     break;
+            case int h when h >= 18 && h <= 23: Console.WriteLine("Noche");     break;
+            default: Console.WriteLine("Hora inválida."); break;
+        }
+    }
+}
+
+
+// ============================================================
+// EJERCICIO 20: Clasificación de IMC
+// ============================================================
+using System;
+
+class Ejercicio20
+{
+    static void Main()
+    {
+        Console.Write("Ingresa tu peso en kg: ");
+        double peso = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Ingresa tu altura en metros (ej. 1.75): ");
+        double altura = Convert.ToDouble(Console.ReadLine());
+
+        if (altura <= 0)
+        {
+            Console.WriteLine("La altura debe ser mayor a 0.");
+            return;
+        }
+
+        double imc = peso / (altura * altura);
+        Console.WriteLine($"\nTu IMC es: {imc:F2}");
+
+        if (imc < 18.5)
+            Console.WriteLine("Clasificación: Bajo peso.");
+        else if (imc < 25)
+            Console.WriteLine("Clasificación: Normal.");
+        else if (imc < 30)
+            Console.WriteLine("Clasificación: Sobrepeso.");
+        else
+            Console.WriteLine("Clasificación: Obesidad.");
+    }
+}
