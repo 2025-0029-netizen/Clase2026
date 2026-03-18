@@ -1,0 +1,263 @@
+using System;
+using System.Collections.Generic;
+
+// ============================================================
+//  SISTEMA DE VEHÍCULOS — Principios de POO en C#
+//  Un solo archivo con 5 clases y el programa principal
+// ============================================================
+
+namespace SistemaVehiculos
+{
+    // ══════════════════════════════════════════════════════════
+    //  1. ABSTRACCIÓN — Clase abstracta Vehiculo
+    //     Define el "contrato" de todo vehículo.
+    //     NO puede instanciarse directamente.
+    // ══════════════════════════════════════════════════════════
+    public abstract class Vehiculo
+    {
+        public string Marca  { get; protected set; }
+        public string Modelo { get; protected set; }
+        public int    Anio   { get; protected set; }
+
+        protected Vehiculo(string marca, string modelo, int anio)
+        {
+            Marca  = marca;
+            Modelo = modelo;
+            Anio   = anio;
+        }
+
+        // Métodos abstractos: cada subclase DEBE implementarlos
+        public abstract string Arrancar();
+        public abstract string Detener();
+        public abstract string TipoCombustible();
+
+        // Método concreto compartido por todas las subclases
+        public virtual string Descripcion()
+            => $"[{GetType().Name}] {Anio} {Marca} {Modelo}";
+    }
+
+
+    // ══════════════════════════════════════════════════════════
+    //  2. ENCAPSULAMIENTO — Clase Auto
+    //     Los datos internos son privados y se protegen
+    //     con validaciones en los métodos públicos.
+    // ══════════════════════════════════════════════════════════
+    public class Auto : Vehiculo
+    {
+        // Campos PRIVADOS — nadie los toca directamente
+        private double _combustible;
+        private bool   _encendido;
+        private const double Tanque = 60.0;
+
+        public Auto(string marca, string modelo, int anio, double combustible = 40.0)
+            : base(marca, modelo, anio)
+        {
+            _combustible = Math.Clamp(combustible, 0, Tanque);
+            _encendido   = false;
+        }
+
+        // Solo lectura desde fuera
+        public double Combustible => _combustible;
+        public bool   Encendido   => _encendido;
+
+        // Método con validación — protege el estado interno
+        public string Cargar(double litros)
+        {
+            if (litros <= 0) return "Cantidad invalida.";
+            double cargado = Math.Min(litros, Tanque - _combustible);
+            _combustible += cargado;
+            return $"Se cargaron {cargado:F1}L. Tanque: {_combustible:F1}/{Tanque}L";
+        }
+
+        public override string Arrancar()
+        {
+            if (_encendido)        return "El motor ya estaba encendido.";
+            if (_combustible <= 0) return "Sin combustible para arrancar.";
+            _encendido = true;
+            return $"{Marca} {Modelo}: motor encendido.";
+        }
+
+        public override string Detener()
+        {
+            _encendido = false;
+            return $"{Marca} {Modelo}: motor apagado.";
+        }
+
+        public override string TipoCombustible() => "Gasolina";
+
+        public override string Descripcion()
+            => base.Descripcion() + $" | Combustible: {_combustible:F1}L | Encendido: {_encendido}";
+    }
+
+
+    // ══════════════════════════════════════════════════════════
+    //  3. HERENCIA — Clase Motocicleta
+    //     Hereda de Vehiculo y agrega características propias
+    //     sin repetir el código de la clase base.
+    // ══════════════════════════════════════════════════════════
+    public class Motocicleta : Vehiculo
+    {
+        // Propiedades nuevas — solo existen en Moto
+        public string TipoMoto { get; private set; }
+
+        // "base(...)" inicializa la parte heredada de Vehiculo
+        public Motocicleta(string marca, string modelo, int anio, string tipoMoto)
+            : base(marca, modelo, anio)
+        {
+            TipoMoto = tipoMoto;
+        }
+
+        public override string Arrancar()
+            => $"{Marca} {Modelo} ({TipoMoto}): arranca con un rugido.";
+
+        public override string Detener()
+            => $"{Marca} {Modelo}: frenos aplicados. Detenida.";
+
+        public override string TipoCombustible() => "Gasolina (tanque pequeño)";
+
+        // Método NUEVO exclusivo de Motocicleta
+        public string HacerCaballito()
+            => TipoMoto == "Deportiva"
+               ? $"{Marca} {Modelo} levanta la rueda delantera!"
+               : $"Las motos tipo {TipoMoto} no están hechas para caballitos.";
+
+        public override string Descripcion()
+            => base.Descripcion() + $" | Tipo: {TipoMoto}";
+    }
+
+
+    // ══════════════════════════════════════════════════════════
+    //  4. POLIMORFISMO — Clase Camion
+    //     El MISMO método Arrancar() produce resultados
+    //     distintos según el tipo de camión en ejecución.
+    // ══════════════════════════════════════════════════════════
+    public enum TipoCamion { Ligero, Pesado, Articulado }
+
+    public class Camion : Vehiculo
+    {
+        public TipoCamion Tipo         { get; private set; }
+        public double     CapacidadTon { get; private set; }
+
+        public Camion(string marca, string modelo, int anio,
+                      TipoCamion tipo, double capacidadTon)
+            : base(marca, modelo, anio)
+        {
+            Tipo         = tipo;
+            CapacidadTon = capacidadTon;
+        }
+
+        // Mismo método, comportamiento DIFERENTE según el tipo
+        public override string Arrancar()
+        {
+            return Tipo switch
+            {
+                TipoCamion.Ligero      => $"{Marca} {Modelo} (Ligero): arranca suavemente.",
+                TipoCamion.Pesado      => $"{Marca} {Modelo} (Pesado): arranque con rugido diesel.",
+                TipoCamion.Articulado  => $"{Marca} {Modelo} (Articulado): secuencia de arranque extendida.",
+                _                      => $"{Marca} {Modelo}: arranque estandar."
+            };
+        }
+
+        public override string Detener()
+        {
+            return Tipo switch
+            {
+                TipoCamion.Ligero      => $"{Marca} {Modelo}: frena convencionalmente.",
+                TipoCamion.Pesado      => $"{Marca} {Modelo}: frenos de aire comprimido activados.",
+                TipoCamion.Articulado  => $"{Marca} {Modelo}: frenos independientes en tractora y remolque.",
+                _                      => $"{Marca} {Modelo}: detenido."
+            };
+        }
+
+        public override string TipoCombustible()
+            => Tipo == TipoCamion.Ligero ? "Gasolina o Diesel" : "Diesel";
+
+        public override string Descripcion()
+            => base.Descripcion() + $" | Tipo: {Tipo} | Cap: {CapacidadTon}T";
+    }
+
+
+    // ══════════════════════════════════════════════════════════
+    //  PROGRAMA PRINCIPAL
+    // ══════════════════════════════════════════════════════════
+    class Program
+    {
+        static void Titulo(string texto)
+        {
+            Console.WriteLine($"\n=== {texto} ===");
+        }
+
+        static void Main()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║   SISTEMA DE VEHICULOS — POO en C#  ║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
+
+
+            // ── 1. ABSTRACCIÓN ─────────────────────────────────────────
+            Titulo("1. ABSTRACCION — Vehiculo");
+            Console.WriteLine("Vehiculo es abstracta: no se puede hacer new Vehiculo().");
+            Console.WriteLine("Solo define el contrato: Arrancar(), Detener(), TipoCombustible().");
+            Console.WriteLine("Las clases concretas (Auto, Moto, Camion) la implementan.");
+
+
+            // ── 2. ENCAPSULAMIENTO ─────────────────────────────────────
+            Titulo("2. ENCAPSULAMIENTO — Auto");
+
+            Auto auto = new Auto("Toyota", "Corolla", 2022, combustible: 5.0);
+            Console.WriteLine(auto.Descripcion());
+
+            Console.WriteLine(auto.Arrancar());
+            Console.WriteLine(auto.Cargar(70));   // pide 70L, tanque solo admite ~55
+            Console.WriteLine(auto.Cargar(-10));  // valor invalido → rechazado
+
+            // _combustible es privado, solo se lee con la propiedad
+            Console.WriteLine($"Combustible actual (solo lectura): {auto.Combustible:F1}L");
+            Console.WriteLine(auto.Detener());
+
+
+            // ── 3. HERENCIA ────────────────────────────────────────────
+            Titulo("3. HERENCIA — Motocicleta");
+
+            Motocicleta moto1 = new Motocicleta("Yamaha", "R1",        2023, "Deportiva");
+            Motocicleta moto2 = new Motocicleta("Honda",  "Gold Wing", 2021, "Touring");
+
+            Console.WriteLine(moto1.Descripcion());
+            Console.WriteLine(moto2.Descripcion());
+
+            Console.WriteLine(moto1.Arrancar());
+            Console.WriteLine(moto1.HacerCaballito());  // método exclusivo de Motocicleta
+            Console.WriteLine(moto1.Detener());
+
+            Console.WriteLine(moto2.HacerCaballito());  // Touring → no aplica
+
+            // Moto hereda de Vehiculo
+            Console.WriteLine($"¿moto1 es Vehiculo? {moto1 is Vehiculo}");
+
+
+            // ── 4. POLIMORFISMO ────────────────────────────────────────
+            Titulo("4. POLIMORFISMO — Camion + Lista de Vehiculos");
+
+            Camion c1 = new Camion("Ford",  "Transit", 2020, TipoCamion.Ligero,      3.5);
+            Camion c2 = new Camion("Volvo", "FH16",    2022, TipoCamion.Pesado,     30.0);
+            Camion c3 = new Camion("Scania","R730",    2023, TipoCamion.Articulado, 44.0);
+
+            Console.WriteLine("Mismo metodo Arrancar(), tres resultados distintos:");
+            Console.WriteLine(c1.Arrancar());
+            Console.WriteLine(c2.Arrancar());
+            Console.WriteLine(c3.Arrancar());
+
+            // Polimorfismo por referencia: List<Vehiculo> con tipos distintos
+            Console.WriteLine("\nFlota mixta — llamando Arrancar() en cada uno:");
+            List<Vehiculo> flota = new List<Vehiculo> { auto, moto1, c2 };
+
+            foreach (Vehiculo v in flota)
+                Console.WriteLine($"  {v.Arrancar()}");
+
+
+            Console.WriteLine("\nFin del programa. Presiona una tecla...");
+            Console.ReadKey();
+        }
+    }
+}
